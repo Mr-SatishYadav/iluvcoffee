@@ -8,13 +8,15 @@ import {
   Patch,
   Post,
   Delete,
+  Query,
 } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
   @Get()
-  findAll() {
-    return 'This is the newly created get request.';
+  findAll(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
+    return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
   }
 
   @Get(':id')
