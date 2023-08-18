@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  db:
+    image: postgres  # Specify the image to use
+    restart: always  # Restart the container always
+    ports:
+      - "5432:5432"   # Map host port 5432 to container port 5432
+    environment:
+      POSTGRES_PASSWORD: pass123  # Set the password for the
