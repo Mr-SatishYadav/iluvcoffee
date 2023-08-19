@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     CoffeesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'astra.local',
       port: 5432,
       username: 'postgres',
       password: 'pass123',
