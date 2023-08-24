@@ -21,8 +21,7 @@ export class Coffee {
   @Column({ default: 0 })
   recommendations: number;
 
+  @ManyToMany(() => Flavor, (flavor) => flavor.coffees, { cascade: true })
   @JoinTable()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToMany((type) => Flavor, (flavor) => flavor.coffees, { cascade: true })
   flavors: Flavor[];
 }
