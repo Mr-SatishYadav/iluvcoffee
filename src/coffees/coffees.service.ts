@@ -11,14 +11,14 @@ import appDataSource from 'src/common/db/app-data-source';
 
 @Injectable()
 export class CoffeesService {
-  private readonly connection: DataSource;
+  private readonly dataSource: DataSource;
   constructor(
     @InjectRepository(Coffee)
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
   ) {
-    this.connection = appDataSource;
+    this.dataSource = appDataSource;
   }
 
   findAll({ limit, offset }: PaginationQueryDto) {
@@ -75,7 +75,7 @@ export class CoffeesService {
   }
 
   async recommendCoffee(coffee: Coffee) {
-    const queryRunner = this.connection.createQueryRunner();
+    const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
