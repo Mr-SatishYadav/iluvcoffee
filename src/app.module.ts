@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import appConfig from './config/app.config';
 import { ConnectOptions } from 'typeorm';
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +21,7 @@ import { ConnectOptions } from 'typeorm';
       },
       inject: [ConfigService],
     }),
+    CoffeeRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
