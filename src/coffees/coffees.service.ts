@@ -11,15 +11,13 @@ import appDataSource from 'src/common/db/app-data-source';
 
 @Injectable()
 export class CoffeesService {
-  private readonly dataSource: DataSource;
   constructor(
     @InjectRepository(Coffee)
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
-  ) {
-    this.dataSource = appDataSource;
-  }
+    private readonly dataSource: DataSource,
+  ) {}
 
   findAll({ limit, offset }: PaginationQueryDto) {
     return this.coffeeRepository.find({
