@@ -14,19 +14,23 @@ import { Flavor } from './entities/flavor.entities';
     CoffeesService,
     {
       provide: COFFEE_BRANDS,
-      useFactory: () => [
-        'Starbucks',
-        "Dunkin'",
-        "Peet's Coffee",
-        'Lavazza',
-        'Illy',
-        'Blue Bottle Coffee',
-        'Stumptown Coffee Roasters',
-        'Death Wish Coffee',
-        'Cafe Grumpy',
-        'Counter Culture Coffee',
-      ],
-    }
+      useFactory: async (): Promise<string[]> => {
+        const coffeeBrands = await Promise.resolve([
+          'Starbucks',
+          "Dunkin'",
+          "Peet's Coffee",
+          'Lavazza',
+          'Illy',
+          'Blue Bottle Coffee',
+          'Stumptown Coffee Roasters',
+          'Death Wish Coffee',
+          'Cafe Grumpy',
+          'Counter Culture Coffee',
+        ]);
+        console.log('[!] Async factory')
+        return coffeeBrands;
+      },
+    },
   ],
   exports: [CoffeesService],
 })
