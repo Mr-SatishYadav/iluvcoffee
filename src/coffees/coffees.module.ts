@@ -1,30 +1,11 @@
-import { Module, Injectable } from '@nestjs/common';
-import { CoffeesService } from './coffees.service';
-import { CoffeesController } from './coffees.controller';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Coffee } from './entities/coffee.entity';
-import { Flavor } from './entities/flavor.entities';
 import { Event } from 'src/events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
-
-@Injectable()
-export class CoffeeBrandsFactory {
-  create() {
-    /** ... do something ... */
-    return [
-      'Starbucks',
-      "Dunkin'",
-      "Peet's Coffee",
-      'Lavazza',
-      'Illy',
-      'Blue Bottle Coffee',
-      'Stumptown Coffee Roasters',
-      'Death Wish Coffee',
-      'Cafe Grumpy',
-      'Counter Culture Coffee',
-    ];
-  }
-}
+import { CoffeesController } from './coffees.controller';
+import { CoffeesService } from './coffees.service';
+import { Coffee } from './entities/coffee.entity';
+import { Flavor } from './entities/flavor.entities';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
@@ -33,10 +14,19 @@ export class CoffeeBrandsFactory {
     CoffeesService,
     {
       provide: COFFEE_BRANDS,
-      useFactory: (brandsFactory: CoffeeBrandsFactory) =>
-        brandsFactory.create(),
-      inject: [CoffeeBrandsFactory],
-    },
+      useFactory: () => [
+        'Starbucks',
+        "Dunkin'",
+        "Peet's Coffee",
+        'Lavazza',
+        'Illy',
+        'Blue Bottle Coffee',
+        'Stumptown Coffee Roasters',
+        'Death Wish Coffee',
+        'Cafe Grumpy',
+        'Counter Culture Coffee',
+      ],
+    }
   ],
   exports: [CoffeesService],
 })
