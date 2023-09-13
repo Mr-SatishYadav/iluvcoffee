@@ -20,6 +20,7 @@ export class CoffeesService {
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
     console.log(coffeeBrands);
+    console.log('Coffee service instantiated!');
   }
 
   findAll({ limit, offset }: PaginationQueryDto) {
