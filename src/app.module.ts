@@ -1,5 +1,5 @@
 import * as Joi from '@hapi/joi';
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConnectOptions } from 'typeorm';
@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { CoffeesModule } from './coffees/coffees.module';
 import appConfig from './config/app.config';
+import { APP_PIPE } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,12 @@ import appConfig from './config/app.config';
     CoffeeRatingModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
