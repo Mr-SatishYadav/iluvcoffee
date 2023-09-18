@@ -6,9 +6,10 @@ import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
 import { Flavor } from './entities/flavor.entities';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
+  imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event]), ConfigModule],
   controllers: [CoffeesController],
   providers: [
     CoffeesService,
@@ -27,7 +28,7 @@ import { Flavor } from './entities/flavor.entities';
           'Cafe Grumpy',
           'Counter Culture Coffee',
         ]);
-        console.log('[!] Async factory')
+        console.log('[!] Async factory');
         return coffeeBrands;
       },
     },
