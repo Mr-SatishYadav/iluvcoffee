@@ -9,12 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      // transform: true,
+      transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
-      // transformOptions: {
-      //   enableImplicitConversion: true,
-      // },
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
