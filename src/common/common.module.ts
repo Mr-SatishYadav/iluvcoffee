@@ -17,6 +17,7 @@ export class CommonModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggingMiddleware)
-      .forRoutes({ path: 'coffees', method: RequestMethod.GET });
+      .exclude({ path: 'coffees', method: RequestMethod.GET })
+      .forRoutes('*');
   }
 }
