@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { MessagesModule } from './messages/messages.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule); // Create the app with NestFactory
+  const app = await NestFactory.create(MessagesModule); // Create the app with NestFactory
   await app.listen(3000); // Listen on port 3000
 }
 bootstrap();
