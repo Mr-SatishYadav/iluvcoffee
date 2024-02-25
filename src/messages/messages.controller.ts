@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -35,7 +36,11 @@ export class MessagesController {
    */
   @Get('/:id')
   getMessage(@Param('id') id: string) {
-    return this.messagesService.findOne(id);
+    const message = this.messagesService.findOne(id);
+    if (!message) {
+      throw new NotFoundException('Message not found!');
+    }
+    return message;
   }
 
   /**
@@ -56,6 +61,10 @@ export class MessagesController {
 
   @Delete('/:id')
   deleteMessage(@Param('id') id: string) {
-    return this.messagesService.delete(id);
+    const message = this.messagesService.delete(id);
+    if (!message) {
+      throw new NotFoundException('Message not found!');
+    }
+    return message;
   }
 }
