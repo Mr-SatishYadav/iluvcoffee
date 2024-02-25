@@ -34,7 +34,7 @@ export class MessagesRepository {
   findOne(id: number) {
     const messages = this.findAll();
     const message = messages[id];
-    if (!message) return 'Message not found!!';
+    if (!message) return;
     return { id, message: messages[id] };
   }
 
@@ -60,7 +60,7 @@ export class MessagesRepository {
     const deletedMessage = messages[id];
     messages[id] = undefined;
     writeFileSync('messages.json', JSON.stringify(messages));
-    if (!deletedMessage) return 'Message not found!!';
+    if (!deletedMessage) return;
     return { id, message: deletedMessage };
   }
 }
