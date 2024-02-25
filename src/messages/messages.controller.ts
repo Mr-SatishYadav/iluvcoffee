@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateMessageDto } from './dtos/create-message.dto';
+import { MessagesService } from './messages.service';
 
 /**
  * Controller for managing messages.
@@ -9,13 +18,14 @@ import { CreateMessageDto } from './dtos/create-message.dto';
  * Controller class for managing messages.
  */
 export class MessagesController {
+  constructor(private readonly messagesService: MessagesService) {}
   /**
    * Get a list of messages.
    * @returns A string representing the list of messages.
    */
   @Get()
   listMessages() {
-    return 'List of messages';
+    return this.messagesService.findAll();
   }
 
   /**
@@ -25,7 +35,7 @@ export class MessagesController {
    */
   @Get('/:id')
   getMessage(@Param('id') id: string) {
-    return 'A single message with the ID: ' + id;
+    return this.messagesService.findOne(id);
   }
 
   /**
@@ -36,6 +46,16 @@ export class MessagesController {
    */
   @Post()
   createMessage(@Body() body: CreateMessageDto) {
-    return 'Create a message with the content: ' + body.content;
+    return this.messagesService.create(body.content);
+  }
+
+  @Patch('/:id')
+  updateMessage(@Param('id') id: string, @Body() body: CreateMessageDto) {
+    return this.messagesService.update(id, body.content);
+  }
+
+  @Delete('/:id')
+  deleteMessage(@Param('id') id: string) {
+    return this.messagesService.delete(id);
   }
 }
