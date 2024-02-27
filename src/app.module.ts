@@ -11,7 +11,7 @@ import { UsersModule } from './users/users.module';
   imports: [MessagesModule, ComputerModule, UsersModule, ReportsModule, TypeOrmModule.forRoot({
     type: 'sqlite',
     database: 'db.sqlite',
-    entities: [__dirname + '/**/*.entity{.ts}'],
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
   })],
 })
