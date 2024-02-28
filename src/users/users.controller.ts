@@ -17,6 +17,7 @@ import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -33,7 +34,6 @@ export class UsersController {
     return this.usersService.update(id, body);
   }
 
-  @Serialize(UserDto)
   @Get('/:id')
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.findOne(id);
