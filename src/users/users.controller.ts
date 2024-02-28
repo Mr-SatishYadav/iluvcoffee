@@ -8,14 +8,13 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
-  UseInterceptors,
+  Query
 } from '@nestjs/common';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { UsersService } from './users.service';
-import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
+import { UsersService } from './users.service';
 
 @Controller('auth')
 export class UsersController {
@@ -34,7 +33,7 @@ export class UsersController {
     return this.usersService.update(id, body);
   }
 
-  @UseInterceptors(new SerializeInterceptor(UserDto))
+  @Serialize(UserDto)
   @Get('/:id')
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.findOne(id);
