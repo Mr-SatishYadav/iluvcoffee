@@ -8,7 +8,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query
+  Query,
+  Session
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -21,6 +22,17 @@ import { AuthService } from './auth.service';
 @Serialize(UserDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService, private readonly authService: AuthService) {}
+
+  @Get('/colors/:color')
+  setColorSession(@Param('color') color: string, @Session() session: any){
+    session.color = color;
+    return `The color is: ${color}`;
+  }
+
+  @Get('/colors')
+  getColorSession(@Session() session: any){
+    return `The color is: ${session.color}`;
+  }
 
   @Post('/register')
   createUser(@Body() body: CreateUserDto) {
