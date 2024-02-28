@@ -1,13 +1,22 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { Observable, map } from 'rxjs';
+import { UserDto } from 'src/users/dtos/user.dto';
 
 @Injectable()
 export class SerializeInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    console.log('I am running before the handler', context);
-    return next.handle().pipe(map((data) => {
-      console.log('I am running before response is sent out', data);
-      return data;
-    }));
+    return next.handle().pipe(
+      map((data) => {
+        return plainToClass(UserDto, data, {
+          excludeExtraneousValues: true,
+        });
+      }),
+    );
   }
 }
