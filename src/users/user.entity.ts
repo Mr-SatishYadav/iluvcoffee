@@ -5,6 +5,8 @@ import {
   AfterInsert,
   AfterUpdate,
   AfterRemove,
+  BeforeInsert,
+  BeforeUpdate
 } from 'typeorm';
 
 @Entity()
@@ -23,6 +25,17 @@ export class User {
 
   @Column()
   updated_at: Date;
+
+  @BeforeInsert()
+  updateTimestamps() {
+    this.created_at = new Date();
+    this.updated_at = new Date();
+  }
+
+  @BeforeUpdate()
+  updateUpdateTimestamp() {
+    this.updated_at = new Date();
+  }
 
   @AfterInsert()
   logInsert() {

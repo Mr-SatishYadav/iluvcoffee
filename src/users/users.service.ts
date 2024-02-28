@@ -18,11 +18,7 @@ export class UsersService {
    * @returns The created user.
    */
   create(data: Partial<User>) {
-    const user = this.repo.create({
-      ...data,
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
+    const user = this.repo.create(data);
     return this.repo.save(user);
   }
 
@@ -35,9 +31,6 @@ export class UsersService {
   findOne(id: number) {
     const options = { where: { id } } as FindOneOptions<User>;
     const user = this.repo.findOne(options);
-    if (!user) {
-      throw new NotFoundException(`user not found with provided id:${id}`);
-    }
     return user;
   }
 
@@ -50,9 +43,6 @@ export class UsersService {
   find(email: string) {
     const options = { where: { email } } as FindManyOptions<User>;
     const users = this.repo.find(options);
-    if (!users) {
-      throw new NotFoundException(`user[s] not found with provided email:${email}`);
-    }
     return users;
   }
 
@@ -65,7 +55,10 @@ export class UsersService {
    */
   async update(id: number, data: Partial<User>) {
     const user = await this.findOne(id);
-    Object.assign(user, { ...data, updated_at: new Date() });
+    if (!user) {
+      throw new NotFoundException(`user not found with provided id:${id}`);
+    }
+    Object.assign(user, data);
     return this.repo.save(user);
   }
 
@@ -77,6 +70,9 @@ export class UsersService {
    */
   async remove(id: number) {
     const user = await this.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`user not found with provided id:${id}`);
+    }
     await this.repo.remove(user);
     return user;
   }
