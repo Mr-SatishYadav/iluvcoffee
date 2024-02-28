@@ -8,7 +8,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query
+  Query,
+  Session,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
@@ -20,16 +21,23 @@ import { UsersService } from './users.service';
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
-  constructor(private readonly usersService: UsersService, private readonly authService: AuthService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post('/register')
-  createUser(@Body() body: CreateUserDto) {
-    return this.authService.register(body.email, body.password);
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.register(body.email, body.password);
+    session.userId = user.id;
+    return user;
   }
-  
+
   @Post('/login')
-  loginUser(@Body() body: CreateUserDto) {
-    return this.authService.login(body.email, body.password);
+  async loginUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.login(body.email, body.password);
+    session.userId = user.id;
+    return user;
   }
 
   @Patch('/:id')
