@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { User } from './user.entity';
 
 /**
@@ -29,8 +29,8 @@ export class UsersService {
    * @throws NotFoundException if the user is not found.
    */
   findOne(id: number) {
-    const options = { where: { id } } as FindOneOptions<User>;
-    const user = this.repo.findOne(options);
+    if(!id) return null;
+    const user = this.repo.findOneBy({ id: id });
     return user;
   }
 
