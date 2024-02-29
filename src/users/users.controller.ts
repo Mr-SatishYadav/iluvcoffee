@@ -20,6 +20,7 @@ import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { User } from './user.entity';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -31,7 +32,7 @@ export class UsersController {
   ) {}
 
   @Get('/whoami')
-  whoAmI(@Session() session: any, @CurrentUser() user: any) {
+  whoAmI(@Session() session: any, @CurrentUser() user: User) {
     console.log(user);
     return this.usersService.findOne(session.userId);
   }
