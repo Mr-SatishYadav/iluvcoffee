@@ -43,20 +43,6 @@ describe('AuthService', () => {
     expect(authService).toBeDefined();
   });
 
-  it('creates a new user with a salted and hashed password', async () => {
-    const email = 'test@test.com';
-    const password = 'password';
-    const user = await authService.register(email, password);
-    
-    expect(user).toBeDefined();
-    expect(user.password).not.toEqual(password);
-    
-    const [salt, hash] = user.password.split('.');
-    
-    expect(salt).toBeDefined();
-    expect(hash).toBeDefined();
-  });
-
   describe('register', () => {
     it('should throw BadRequestException if email is already in use', async () => {
       const email = 'test@example.com';
@@ -87,6 +73,20 @@ describe('AuthService', () => {
         password: expect.any(String),
       });
       expect(result).toEqual({ email });
+    });
+
+    it('creates a new user with a salted and hashed password', async () => {
+      const email = 'test@test.com';
+      const password = 'password';
+      const user = await authService.register(email, password);
+
+      expect(user).toBeDefined();
+      expect(user.password).not.toEqual(password);
+
+      const [salt, hash] = user.password.split('.');
+
+      expect(salt).toBeDefined();
+      expect(hash).toBeDefined();
     });
   });
 
