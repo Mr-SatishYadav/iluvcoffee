@@ -3,9 +3,9 @@
  * It tests the functionality of the authentication service, including user registration and login.
  */
 import { Test } from '@nestjs/testing';
-import { AuthService } from './auth.service';
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { AuthService } from '../auth.service';
+import { User } from '../user.entity';
+import { UsersService } from '../users.service';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { scryptSync } from 'crypto';
 
