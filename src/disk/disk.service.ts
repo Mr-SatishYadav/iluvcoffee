@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PowerService } from 'src/power/power.service';
+import { PowerService } from '@app/power/power.service';
 
 @Injectable()
 export class DiskService {
