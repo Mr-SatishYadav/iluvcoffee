@@ -15,10 +15,18 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('handles a register request', () => {
+    const email = 'test1@example.com';
+    const password = 't@eSt1234';
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/auth/register')
+      .send({ email, password })
+      .expect(201)
+      .then((response) => {
+        expect(response.get('Set-Cookie')).toBeDefined();
+        const { id, email } = response.body;
+        expect(id).toBeDefined();
+        expect(email).toEqual(email);
+      });
   });
 });

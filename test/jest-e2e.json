@@ -10,5 +10,6 @@
   "moduleNameMapper": {
     "@app/(.*)": "<rootDir>../src/$1"
   },
-  "preset": "ts-jest"
+  "preset": "ts-jest",
+  "setupFilesAfterEnv": ["<rootDir>/setup.ts"]
 }
