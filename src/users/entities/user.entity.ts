@@ -6,7 +6,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
@@ -40,16 +40,27 @@ export class User {
   @AfterInsert()
   logInsert() {
     console.log('User has been inserted');
-    console.table({id: this.id, created_at: this.created_at.toLocaleString(), email: this.email});
+    console.table({
+      id: this.id,
+      created_at: this.created_at.toLocaleString(),
+      email: this.email,
+    });
   }
   @AfterUpdate()
   logUpdate() {
     console.log('User has been updated');
-    console.table({id: this.id, updated_at: this.updated_at.toLocaleString(), email: this.email});
+    console.table({
+      id: this.id,
+      updated_at: this.updated_at.toLocaleString(),
+      email: this.email,
+    });
   }
   @AfterRemove()
   logRemove() {
     console.log('User has been removed');
-    console.table({id: this.id, updated_at: this.updated_at.toLocaleString(), email: this.email});
+    console.table({
+      updated_at: this.updated_at.toLocaleString(),
+      email: this.email,
+    });
   }
 }
