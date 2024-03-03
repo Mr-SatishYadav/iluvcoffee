@@ -1,3 +1,4 @@
+import { User } from '@app/users/entities/user.entity';
 import {
   AfterInsert,
   AfterRemove,
@@ -6,6 +7,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -41,6 +43,9 @@ export class Report {
   @Column()
   updated_at: Date;
 
+  @ManyToOne(() => User, (user) => user.reports, { eager: true })
+  user: User;
+
   @BeforeInsert()
   updateTimestamps() {
     this.created_at = new Date();
@@ -61,6 +66,7 @@ export class Report {
       make: this.make,
       model: this.model,
       year: this.year,
+      user: this.user.id,
     });
   }
   @AfterUpdate()
@@ -72,6 +78,7 @@ export class Report {
       make: this.make,
       model: this.model,
       year: this.year,
+      user: this.user.id,
     });
   }
   @AfterRemove()
@@ -82,6 +89,7 @@ export class Report {
       make: this.make,
       model: this.model,
       year: this.year,
+      user: this.user.id,
     });
   }
 }

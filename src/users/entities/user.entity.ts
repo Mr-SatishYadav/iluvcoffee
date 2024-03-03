@@ -7,7 +7,10 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { Report } from '../../reports/entities/report.entity';
 
 @Entity()
 export class User {
@@ -25,6 +28,9 @@ export class User {
 
   @Column()
   updated_at: Date;
+
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[];
 
   @BeforeInsert()
   updateTimestamps() {
