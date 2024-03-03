@@ -27,6 +27,9 @@ export class Report {
   mileage: number;
 
   @Column()
+  price: number;
+
+  @Column()
   lat: number;
 
   @Column()
