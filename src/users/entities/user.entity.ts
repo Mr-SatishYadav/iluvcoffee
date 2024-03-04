@@ -29,6 +29,9 @@ export class User {
   @Column()
   updated_at: Date;
 
+  @Column({ default: false })
+  admin: boolean;
+
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
 
