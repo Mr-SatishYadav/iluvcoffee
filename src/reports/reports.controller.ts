@@ -21,17 +21,18 @@ import { AdminGuard } from '@app/guards/admin.guard';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
 
 @Controller('reports')
-@Serialize(ReportDto)
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
-
+  
   @Post()
+  @Serialize(ReportDto)
   @UseGuards(AuthGuard)
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
     return this.reportsService.create(body, user);
   }
-
+  
   @Patch('/:id')
+  @Serialize(ReportDto)
   @UseGuards(AdminGuard)
   approveReport(
     @Param('id', ParseIntPipe) id: number,
