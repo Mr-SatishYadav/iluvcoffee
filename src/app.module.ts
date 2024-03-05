@@ -4,8 +4,6 @@ import { APP_PIPE } from '@nestjs/core';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { ComputerModule } from './computer/computer.module';
-import { MessagesModule } from './messages/messages.module';
 import { ReportsModule } from './reports/reports.module';
 import { UsersModule } from './users/users.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -19,8 +17,8 @@ const cookieSession = require('cookie-session');
       cache: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    MessagesModule,
-    ComputerModule,
+    // MessagesModule,
+    // ComputerModule,
     UsersModule,
     ReportsModule,
     TypeOrmModule.forRootAsync({
@@ -47,7 +45,12 @@ const cookieSession = require('cookie-session');
   ],
 })
 export class AppModule {
+  constructor(private readonly configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cookieSession({ keys: ['asdfasfs'] })).forRoutes('*');
+    consumer
+      .apply(
+        cookieSession({ keys: this.configService.get<string>('COOKIE_KEY') }),
+      )
+      .forRoutes('*');
   }
 }
