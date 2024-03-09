@@ -4,19 +4,21 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 const dbConfig = {
   synchronize: false,
   type: 'sqlite',
+  entities: ['/**/*.entity.{ts,js}'],
+  migrations: ['/migrations/*.{ts,js}'],
+  // migrationsRun: true,
+  migrationsTableName: 'car_resale-migrations',
 } as DataSourceOptions;
 
 switch (process.env.NODE_ENV) {
   case 'development':
     Object.assign(dbConfig, {
       database: 'db.sqlite',
-      entities: [__dirname + '/**/*.entity.{js}'],
     });
     break;
   case 'test':
     Object.assign(dbConfig, {
       database: 'test.sqlite',
-      entities: [__dirname + '/**/*.entity.{ts}'],
     });
     break;
   case 'production':
