@@ -4,8 +4,8 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 const dbConfig = {
   synchronize: false,
   type: 'sqlite',
-  entities: ['/**/*.entity.{ts,js}'],
-  migrations: ['/migrations/*.{ts,js}'],
+  entities: [__dirname + '/**/*.entity.{ts,js}'],
+  migrations: [__dirname + '/migrations/*.{ts,js}'],
   // migrationsRun: true,
   migrationsTableName: 'car_resale-migrations',
 } as DataSourceOptions;
@@ -25,7 +25,6 @@ switch (process.env.NODE_ENV) {
     Object.assign(dbConfig, {
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [__dirname + '/**/*.entity.{ts,js}'],
       ssl: true,
     });
     break;
