@@ -14,6 +14,7 @@ switch (process.env.NODE_ENV) {
   case 'development':
     Object.assign(dbConfig, {
       database: 'db.sqlite',
+      synchronize: true,
     });
     break;
   case 'test':

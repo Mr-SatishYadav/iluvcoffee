@@ -1,3 +1,4 @@
+import { randomBytes, scryptSync } from 'crypto';
 import { Report } from '../../reports/entities/report.entity';
 import {
   AfterInsert,
@@ -33,6 +34,17 @@ export class User {
 
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password) {
+      const salt = randomBytes(8).toString('hex');
+      const hash = scryptSync(this.password, salt, 32).toString('hex');
+      const encryptedPassword = salt + '.' + hash;
+      this.password = encryptedPassword;
+    }
+  }
 
   @BeforeInsert()
   updateTimestamps() {

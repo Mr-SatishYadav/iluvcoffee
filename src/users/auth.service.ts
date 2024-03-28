@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { scryptSync } from 'crypto';
 import { UsersService } from './users.service';
-import { randomBytes, scryptSync } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -11,15 +15,11 @@ export class AuthService {
     if (user.length) {
       throw new BadRequestException('email in use');
     }
-    
-    const salt = randomBytes(8).toString('hex');
-    const hash = scryptSync(password, salt, 32).toString('hex');
-    const encryptedPassword = salt + '.' + hash;
 
-    return await this.usersService.create({ email, password: encryptedPassword});
+    return await this.usersService.create({ email, password });
   }
 
-  async login(email: string, password: string){
+  async login(email: string, password: string) {
     const [user] = await this.usersService.find(email);
     if (!user) {
       throw new NotFoundException('Invalid email');
