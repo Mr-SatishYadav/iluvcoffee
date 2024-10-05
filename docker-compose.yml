@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres # Specify the image to use
@@ -7,4 +5,6 @@ services:
     ports:
       - '5432:5432' # Map host port 5432 to container port 5432
     environment:
-      POSTGRES_PASSWORD: pass123 # Set the password for the
+      POSTGRES_PASSWORD: p@ss_word2T # Set the password for the database
+      POSTGRES_USER: skyadav # Set the username for the database
+      POSTGRES_DB: pglocaldb # Set the name of the database
